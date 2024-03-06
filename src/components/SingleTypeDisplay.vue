@@ -24,7 +24,7 @@ export default {
             console.log("Changed is now",this.changed)
         },
         update_type() {
-            axios.put("/api/type/"+this.edit_type.id+"/",this.edit_type)
+            axios.put("/api/types/"+this.edit_type.id+"/",this.edit_type)
                 .then((result) => {
                     console.log(result)
                     this.$emit("update_type")

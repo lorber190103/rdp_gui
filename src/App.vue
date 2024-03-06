@@ -3,7 +3,11 @@
   import InputBar from './components/InputBar.vue';
   import ValuesDisplay from './components/ValuesDisplay.vue';
   import TypesDisplay from './components/TypesDisplay.vue';
+  import SensorsDisplay from './components/SensorsDisplay.vue';
+  import LocationsDisplay from './components/LocationsDisplay.vue';
   import { ValueType } from './scripts/value_type';
+  import { Sensor } from './scripts/sensor';
+  import { Location } from './scripts/location';
   import { Value } from './scripts/value';
 </script>
 
@@ -95,15 +99,14 @@
       }
     }
   }
-</script>
 
-
-<script lang="ts">
   export default {
     data() {
       return {
         values: new Array<Value>(),
         value_types: new Array<ValueType>(),
+        sensors: new Array<Sensor>(),
+        locations: new Array<Location>(),
         filter_start: '',
         filter_end: '',
         filter_type: '',
@@ -111,6 +114,8 @@
     },
     mounted() {
       this.get_types();
+      this.get_sensors();
+      this.get_locations();
       this.get_values().then((data) => {
         this.values = data;
       });
@@ -162,6 +167,28 @@
           });
       },
 
+      get_sensors() {
+        axios
+          .get('/api/sensors/')
+          .then((result) => {
+            this.sensors = result.data;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      },
+
+      get_locations() {
+        axios
+          .get('/api/locations/')
+          .then((result) => {
+            this.locations = result.data;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      },
+
       get_values() {
         const promise = new Promise<Value[]>((accept, reject) => {
           const url = '/api/value/';
@@ -197,6 +224,8 @@
     <h1 class="row">RDP</h1>
     <InputBar @search="update_search" />
     <TypesDisplay :value_types="value_types" @update_type="get_types" />
-    <ValuesDisplay :values="values" :value_types="value_types" />
+    <SensorsDisplay :sensors="sensors" @update_sensor="get_sensors"/>
+    <LocationsDisplay :locations="locations" @update_location="get_locations"/>
+    <ValuesDisplay :values="values" :value_types="value_types" :sensors="sensors" :locations="locations"/>
   </div>
 </template>
