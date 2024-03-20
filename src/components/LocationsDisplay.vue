@@ -19,8 +19,8 @@ export default {
 
 <template>
   <div class="row bg-primary mt-1">
-    <span class="col-2">Location Editor</span
-    ><span class="col text-end" v-on:click="toggleEditor()">
+    <span class="col-2">Location Editor</span>
+    <span class="col text-end" v-on:click="toggleEditor()">
       <i class="bi bi-caret-down-fill" title="Show LocationEditor" v-if="editor_hidden"></i>
       <i class="bi bi-caret-up-fill" title="Hide LocationEditor" v-else></i>
     </span>
