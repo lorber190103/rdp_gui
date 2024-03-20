@@ -221,7 +221,7 @@
 
 <template>
   <div class="container p-1">
-    <h1 class="row">RDP</h1>
+    <h1 class="row" style="color: white;">RDP</h1>
     <InputBar @search="update_search" />
     <TypesDisplay :value_types="value_types" @update_type="get_types" />
     <SensorsDisplay :sensors="sensors" @update_sensor="get_sensors"/>
